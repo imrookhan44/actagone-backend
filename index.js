@@ -4,12 +4,15 @@ import  cors  from 'cors'
 import dotenv from 'dotenv'
 import bodyParser from 'body-parser'
 import  router from  "./routers/Router.js" ;
+import  otpRouter from  "./routers/otpRoutes.js" ;
+
+
 dotenv.config();
 const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use('/api/v1',router)
+// app.use('/api/v1',router)
 const db = mongoose.connection;
 mongoose.set('strictQuery', false);
 mongoose.connect(process.env.DATABASE_URL)
@@ -18,7 +21,7 @@ db.once('open', function () {
     console.log('Database Connected');
     
 });
-app.use("/api",router);
+app.use("/api",router,otpRouter);
 app.listen(process.env.PORT || 4000, () => {
     console.log('Listening on port');
 
