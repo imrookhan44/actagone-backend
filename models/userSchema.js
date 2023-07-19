@@ -8,20 +8,22 @@ const schema = mongoose.Schema;
 const userSchema = new schema({
    name: {
       type: String,
-      require: true
    },
    email: {
       type: String,
-      require: true,
       unique: true
    },
    password: {
       type: String,
-      require: true
+   },
+   profile_img: {
+      type: String,
+      default: "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"
+
    },
    createdata: {
       type: Date,
-      default:timeStamp
+      default: timeStamp
 
    }
 
