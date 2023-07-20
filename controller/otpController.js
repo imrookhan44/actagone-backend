@@ -136,7 +136,7 @@ export const verifyOTP = (req, res) => {
     OTP.findOne({ phone: phoneNumber, otp: otp })
       .then(otp => {
         if (otp) {
-          otp.deleteOne();
+          // otp.deleteOne();
           res.status(200).json({ message: 'OTP verified successfully', token }); // Send the token in the response
         } else {
           res.status(400).json({ message: 'Invalid OTP' });
