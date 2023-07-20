@@ -1,5 +1,5 @@
 import express from 'express'
-import { controller, getUsers, profile_img } from '../controller/Controller.js';
+import { controller, getUsers, profile_img, updateProfile } from '../controller/Controller.js';
 import { postSmsMarketing } from '../controller/smssend.js'
 import upload from '../helpers/UserProfile.js';
 import { addCard, deleteCard, getCard } from '../controller/AddCard.js';
@@ -20,7 +20,9 @@ router.route('/conversation/:userId').get(getConversation)
 //message routes
 router.route('/message').post(postMessage);
 router.route('/message/:conversationId').get(getMessages);
-//user routes
+//user routes get all users
 router.route('/users/:userId').get(getUsers);
+//update user profile
+router.route('/updateProfile').put(updateProfile);
 
 export default router;

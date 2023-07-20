@@ -2,20 +2,22 @@ import User from '../models/userSchema.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
 export const controller = async (req, res) => {
-  const { name, email, password } = req.body;
-  console.log(name, email, password)
-  if (!name || !email || !password) {
-    return res
-      .status(201)
-      .json({ Error: true, msg: "Please enter all fields" });
-  }
+  const { firstName, lastName, userName, email, password } = req.body;
+  // console.log(firstName, email, )
+  // if (!name || !email ) {
+  //   return res
+  //     .status(201)
+  //     .json({ Error: true, msg: "Please enter all fields" });
+  // }
   try {
     const user = await User.findOne({ email });
     if (!user) {
       let hashedpassword = await bcrypt.hash(password, 12);
 
       const newUser = new User({
-        name,
+        firstName,
+        lastName,
+        userName,
         email,
         password: hashedpassword,
 
@@ -44,6 +46,24 @@ export const controller = async (req, res) => {
     return console.log(error);
   }
 }
+
+//find user with email and update the given data in the database
+export const updateProfile = async (req, res) => {
+  const { firstName, lastName, userName, email, userId } = req.body;
+
+  try {
+    //find user with email and update the given data in the database
+    const findUser = await User.findByIdAndUpdate({ _id: userId }, { firstName, lastName, userName, email }, { new: true });
+    if (!findUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    return res.status(200).json({ message: 'Profile updated successfully', user: findUser });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Server error' });
+  }
+};
+
 
 export const profile_img = async (req, res) => {
   // Access the uploaded image

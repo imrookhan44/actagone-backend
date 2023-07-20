@@ -128,10 +128,10 @@ export const sendOTP = (req, res) => {
 export const verifyOTP = (req, res) => {
   const phoneNumber = req.body?.phoneNumber;
   const otp = req.body?.otp;
-
+  const oneWeek = 7 * 24 * 60 * 60 * 1000;
   if (phoneNumber && otp) {
     // Step 2: If you want to include the token in the response, you can generate it here
-    const token = jwt.sign({ phoneNumber }, secretKey, { expiresIn: '5m' });
+    const token = jwt.sign({ phoneNumber }, secretKey, { expiresIn: oneWeek });
 
     OTP.findOne({ phone: phoneNumber, otp: otp })
       .then(otp => {
