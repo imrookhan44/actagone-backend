@@ -6,7 +6,13 @@ const timeStamp = new Date(Date.UTC(current.getFullYear(),
 const schema = mongoose.Schema;
 
 const userSchema = new schema({
-   name: {
+   firstName: {
+      type: String,
+   },
+   lastName: {
+      type: String,
+   },
+   userName: {
       type: String,
    },
    email: {
