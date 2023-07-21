@@ -76,6 +76,7 @@ import twilio from 'twilio';
 import OTP from '../models/otpModel.js';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+import User from '../models/userSchema.js';
 dotenv.config();
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
@@ -90,8 +91,9 @@ function generateOTP() {
 }
 
 export const sendOTP = (req, res) => {
-  const phoneNumber = req.body.phoneNumber;
-
+  console.log(req.body)
+  // const phoneNumber = req.body.phoneNumber;
+  const { phoneNumber } = req.body;
   if (phoneNumber) {
     const otp = generateOTP();
     const newOTP = new OTP({
@@ -136,8 +138,16 @@ export const verifyOTP = (req, res) => {
     OTP.findOne({ phone: phoneNumber, otp: otp })
       .then(otp => {
         if (otp) {
-          // otp.deleteOne();
-          res.status(200).json({ message: 'OTP verified successfully', token }); // Send the token in the response
+          const checkUser = User.find({ phone: phoneNumber });
+          if (checkUser) {
+            console.log(checkUser);
+            // otp.deleteOne();
+            res.status(200).json({ message: 'OTP verified successfully and go further', token, }); // Send the token in the response
+          } else {
+            console.log("else part", checkUser);
+            res.status(200).json({ message: 'OTP verified successfully and go to signup', token, }); // Send the token in the response
+          }
+
         } else {
           res.status(400).json({ message: 'Invalid OTP' });
         }
