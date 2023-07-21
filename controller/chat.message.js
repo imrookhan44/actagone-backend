@@ -28,8 +28,9 @@ export const getMessages = async (req, res) => {
       console.log(conversationId, 'conversationId')
       const messages = await Messages.find({ conversationId });
       const messageUserData = Promise.all(messages.map(async (message) => {
+        console.log(message, 'message')
         const user = await User.findById(message.senderId);
-        return { user: { id: user._id, email: user.email, firstName: user.firstName }, message: message.message }
+        return { user: { id: user?._id, email: user?.email, firstName: user?.firstName }, message: message.message }
       }));
       res.status(200).json(await messageUserData);
     }

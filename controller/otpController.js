@@ -142,7 +142,7 @@ export const verifyOTP = (req, res) => {
             res.status(200).json({ message: 'OTP verified successfully', token }); // Send the token in the response
           }
           else {
-            res.status(200).json({ message: 'OTP verified successfully go with further signup' }); // Send the token in the response
+            res.status(200).json({ message: 'OTP verified successfully go with further signup', token }); // Send the token in the response
           }
         })
         // if (otp) {
