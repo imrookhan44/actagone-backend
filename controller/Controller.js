@@ -2,7 +2,7 @@ import User from '../models/userSchema.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
 export const controller = async (req, res) => {
-  const { firstName, lastName, userName, email, password } = req.body;
+  const { firstName, lastName, userName, email, password, phone } = req.body;
   // console.log(firstName, email, )
   // if (!name || !email ) {
   //   return res
@@ -17,6 +17,7 @@ export const controller = async (req, res) => {
       const newUser = new User({
         firstName,
         lastName,
+        phone,
         userName,
         email,
         password: hashedpassword,

@@ -12,6 +12,8 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 // app.use('/api/v1',router)
 const db = mongoose.connection;
 mongoose.set('strictQuery', false);

@@ -26,9 +26,6 @@ const userSchema = new schema({
       type: String,
       unique: true
    },
-   otp: {
-      type: String
-   },
    profile_img: {
       type: String,
       default: "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"

@@ -91,9 +91,8 @@ function generateOTP() {
 }
 
 export const sendOTP = (req, res) => {
-  console.log(req.body)
-  // const phoneNumber = req.body.phoneNumber;
-  const { phoneNumber } = req.body;
+  const phoneNumber = req.body.phoneNumber;
+
   if (phoneNumber) {
     const otp = generateOTP();
     const newOTP = new OTP({
@@ -109,7 +108,7 @@ export const sendOTP = (req, res) => {
         client.messages
           .create({
             body: `Your verification code is: ${otp}`,
-            from: twilioPhoneNumber,
+            from: +18149293525,
             to: phoneNumber
           })
           .then(() => {
@@ -137,20 +136,21 @@ export const verifyOTP = (req, res) => {
 
     OTP.findOne({ phone: phoneNumber, otp: otp })
       .then(otp => {
-        if (otp) {
-          const checkUser = User.find({ phone: phoneNumber });
-          if (checkUser) {
-            console.log(checkUser);
-            // otp.deleteOne();
-            res.status(200).json({ message: 'OTP verified successfully and go further', token, }); // Send the token in the response
-          } else {
-            console.log("else part", checkUser);
-            res.status(200).json({ message: 'OTP verified successfully and go to signup', token, }); // Send the token in the response
+        User.findOne({ phone: phoneNumber }).then((user) => {
+          console.log("user phone", user?.phone)
+          if (user?.phone !== undefined && user?.phone !== null) {
+            res.status(200).json({ message: 'OTP verified successfully', token }); // Send the token in the response
           }
-
-        } else {
-          res.status(400).json({ message: 'Invalid OTP' });
-        }
+          else {
+            res.status(200).json({ message: 'OTP verified successfully go with further signup' }); // Send the token in the response
+          }
+        })
+        // if (otp) {
+        //   // otp.deleteOne();
+        //   res.status(200).json({ message: 'OTP verified successfully', token }); // Send the token in the response
+        // } else {
+        //   res.status(400).json({ message: 'Invalid OTP' });
+        // }
       })
       .catch(error => {
         res.status(500).json({ message: 'Failed to verify OTP', error: error.message });
