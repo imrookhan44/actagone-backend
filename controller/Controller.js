@@ -2,7 +2,7 @@ import User from '../models/userSchema.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
 export const controller = async (req, res) => {
-  const { firstName, lastName, userName, phone } = req.body;
+  const { firstName, lastName } = req.body;
   // console.log(firstName, email, )
   // if (!name || !email ) {
   //   return res
@@ -10,16 +10,17 @@ export const controller = async (req, res) => {
   //     .json({ Error: true, msg: "Please enter all fields" });
   // }
   try {
-    const user = await User.findOne({ phone });
+    const user = await User.find({ firstName, lastName });
+    if (user) {
+      const token = jwt.sign({ firstName, lastName }, "your");
+      return res.status(201).json({ msg: "Login success", user, token });
+    }
     if (!user) {
       // let hashedpassword = await bcrypt.hash(password, 12);
 
       const newUser = new User({
         firstName,
         lastName,
-        phone,
-        userName,
-
       });
       console.log("new user", newUser)
       await newUser.save().then((result) => {

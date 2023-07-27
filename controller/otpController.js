@@ -92,7 +92,7 @@ function generateOTP() {
 
 export const sendOTP = (req, res) => {
   const phoneNumber = req.body.phoneNumber;
-
+  console.log(phoneNumber)
   if (phoneNumber) {
     const otp = generateOTP();
     const newOTP = new OTP({
@@ -101,14 +101,14 @@ export const sendOTP = (req, res) => {
     });
 
     // Step 1: Generate a JWT token for the phone number
-    const token = jwt.sign({ phoneNumber }, secretKey, { expiresIn: '5m' });
+    // const token = jwt.sign({ phoneNumber }, secretKey, { expiresIn: '5m' });
 
     newOTP.save()
       .then(() => {
         client.messages
           .create({
             body: `Your verification code is: ${otp}`,
-            from: +18149293525,
+            from: twilioPhoneNumber,
             to: phoneNumber
           })
           .then(() => {
