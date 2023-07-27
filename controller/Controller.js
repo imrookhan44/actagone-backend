@@ -2,7 +2,7 @@ import User from '../models/userSchema.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
 export const controller = async (req, res) => {
-  const { firstName, lastName } = req.body;
+  const { firstName, lastName, userName } = req.body;
   // console.log(firstName, email, )
   // if (!name || !email ) {
   //   return res
