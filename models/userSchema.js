@@ -6,22 +6,28 @@ const timeStamp = new Date(Date.UTC(current.getFullYear(),
 const schema = mongoose.Schema;
 
 const userSchema = new schema({
-   name: {
+   firstName: {
       type: String,
-      require: true
    },
-   email: {
+   lastName: {
       type: String,
-      require: true,
-      unique: true
    },
-   password: {
+   userName: {
       type: String,
-      require: true
+   },
+
+   // phone: {
+   //    type: String,
+   //    unique: true
+   // },
+   profile_img: {
+      type: String,
+      default: "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"
+
    },
    createdata: {
       type: Date,
-      default:timeStamp
+      default: timeStamp
 
    }
 
