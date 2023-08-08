@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use('/api/v1',router)
+// app.use('/api/v1',router)
 const db = mongoose.connection;
 mongoose.set('strictQuery', false);
 mongoose.connect(process.env.DATABASE_URL)
