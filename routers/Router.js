@@ -5,6 +5,7 @@ import upload from '../helpers/UserProfile.js';
 import { addCard, deleteCard, getCard } from '../controller/AddCard.js';
 import { getConversation, postConversation } from '../controller/chat.conversation.js';
 import { getMessages, postMessage } from '../controller/chat.message.js';
+
 const router = express.Router()
 router.post('/register', controller);
 router.post('/profile-image', upload.single('profile_img'), profile_img);
@@ -12,6 +13,7 @@ router.post('/addCard', addCard)
 router.get('/getCards', getCard)
 router.delete('/deleteCard', deleteCard)
 router.post('/smsMarketing', postSmsMarketing)
+
 
 //conversation routes
 router.route('/conversation').post(postConversation)
