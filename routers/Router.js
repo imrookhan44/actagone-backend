@@ -5,6 +5,7 @@ import upload from '../helpers/UserProfile.js';
 import { addCard, deleteCard, getCard } from '../controller/AddCard.js';
 import { getConversation, postConversation } from '../controller/chat.conversation.js';
 import { getMessages, postMessage } from '../controller/chat.message.js';
+import updateName from '../controller/signup.js';
 
 const router = express.Router()
 router.post('/register', controller);
@@ -13,6 +14,7 @@ router.post('/addCard', addCard)
 router.get('/getCards', getCard)
 router.delete('/deleteCard', deleteCard)
 router.post('/smsMarketing', postSmsMarketing)
+router.put('/signup', updateName)
 
 
 //conversation routes
@@ -31,26 +33,3 @@ export default router;
 
 
 
-// const mongoose = require('mongoose');
-
-// // Define the OTP schema
-// const otpSchema = new mongoose.Schema({
-//   email: {
-//     type: String,
-//     required: true,
-//   },
-//   otp: {
-//     type: String,
-//     required: true,
-//   },
-//   createdAt: {
-//     type: Date,
-//     default: Date.now,
-    
-//   },
-// });
-
-// // Create the OTP model
-// const OTP = mongoose.model('OTP', otpSchema);
-
-// module.exports = OTP;

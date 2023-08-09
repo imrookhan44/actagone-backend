@@ -15,23 +15,12 @@ const userSchema = new schema({
    userName: {
       type: String,
    },
-
-   // phone: {
-   //    type: String,
-   //    unique: true
-   // },
    profile_img: {
       type: String,
       default: "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"
 
    },
-   createdata: {
-      type: Date,
-      default: timeStamp
-
-   }
-
-})
+}, { timestamps: true })
 
 const user = mongoose.model('users', userSchema);
 

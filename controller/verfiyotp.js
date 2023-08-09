@@ -1,5 +1,6 @@
 import OTP from '../models/otpModel.js';
 
+// Function to verify OTP
 async function verifyOTPnode(req, res) {
   const { email, otp } = req.body;
 
