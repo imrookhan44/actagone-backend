@@ -28,3 +28,29 @@ router.route('/users/:userId').get(getUsers);
 router.route('/updateProfile').put(updateProfile);
 
 export default router;
+
+
+
+// const mongoose = require('mongoose');
+
+// // Define the OTP schema
+// const otpSchema = new mongoose.Schema({
+//   email: {
+//     type: String,
+//     required: true,
+//   },
+//   otp: {
+//     type: String,
+//     required: true,
+//   },
+//   createdAt: {
+//     type: Date,
+//     default: Date.now,
+    
+//   },
+// });
+
+// // Create the OTP model
+// const OTP = mongoose.model('OTP', otpSchema);
+
+// module.exports = OTP;

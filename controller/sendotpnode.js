@@ -3,7 +3,7 @@ import randomstring from 'randomstring';
 import OTP from '../models/otpModel.js';
 
 
-// Replace these credentials with your email account details
+
 const emailConfig = {
   service: 'Gmail',
   auth: {
@@ -15,7 +15,7 @@ const emailConfig = {
 // Function to generate a random OTP
 function generateOTP() {
   return randomstring.generate({
-    length: 6, // Change the length as per your requirement
+    length: 6, 
     charset: 'numeric',
   });
 }
