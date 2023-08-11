@@ -6,6 +6,7 @@ import { addCard, deleteCard, getCard } from '../controller/AddCard.js';
 import { getConversation, postConversation } from '../controller/chat.conversation.js';
 import { getMessages, postMessage } from '../controller/chat.message.js';
 import updateName from '../controller/signup.js';
+import updateNameAndImage from '../controller/signup.js';
 
 const router = express.Router()
 router.post('/register', controller);
@@ -14,7 +15,7 @@ router.post('/addCard', addCard)
 router.get('/getCards', getCard)
 router.delete('/deleteCard', deleteCard)
 router.post('/smsMarketing', postSmsMarketing)
-router.put('/signup', updateName)
+router.put('/signup', updateNameAndImage)
 
 
 //conversation routes
