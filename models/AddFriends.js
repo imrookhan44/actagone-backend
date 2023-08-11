@@ -1,5 +1,5 @@
-import mongoose, { Schema } from 'mongoose';
-const schema = mongoose.schema;
+import mongoose from 'mongoose';
+
 
 var current = new Date();
 const timeStamp = new Date(Date.UTC(current.getFullYear(),
@@ -7,7 +7,7 @@ const timeStamp = new Date(Date.UTC(current.getFullYear(),
     current.getMinutes(), current.getSeconds(), current.getMilliseconds()));
 
 
-const AddFirendsSchema = new Schema({
+const AddFirendsSchema = new mongoose.Schema({
     firstName: {
         type: String,
         required: true

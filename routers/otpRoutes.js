@@ -2,6 +2,7 @@ import express from 'express';
 import { sendOTP, verifyOTP } from '../controller/otpController.js';
 import { sendOTPnode, loginOtpSend, loginOtpVerify } from '../controller/sendotpnode.js';
 import verifyOTPnode from '../controller/verfiyotp.js';
+import { deleteFriend, getFriends, postFriends, searchFriends } from '../controller/AddFriends.js';
 
 const router = express.Router();
 
@@ -11,5 +12,10 @@ router.post('/otp', sendOTPnode);
 router.post('/otpverfiy', verifyOTPnode);
 router.post('/login', loginOtpSend);
 router.post('/loginotpverify', loginOtpVerify);
+router.get('/friends', getFriends);
+router.post('/friends', postFriends);
+router.delete('/friends', deleteFriend);
+router.get('/friends/search/:key', searchFriends);
+
 
 export default router;
