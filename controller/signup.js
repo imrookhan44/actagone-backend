@@ -22,7 +22,7 @@ export const updateName = async (req, res) => {
 export const  getAllUsers =  async (req, res)=>  {
     try {
         const users = await OTP.find()
-            res.send(users).res.json({ message: "data found" });
+            res.send(users);
     }
     catch (err) {
         console.log(err)
@@ -31,3 +31,5 @@ export const  getAllUsers =  async (req, res)=>  {
 
     
 }
+
+
