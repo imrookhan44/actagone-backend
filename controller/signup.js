@@ -1,5 +1,6 @@
 import OTP from '../models/otpModel.js';
-async function updateName(req, res) {
+// import user from '../models/userSchema.js'
+export const updateName = async (req, res) => {
     const { _id } = req.body;
     if (!_id) {
         return res.status(404).json({ message: 'Id is required' })
@@ -17,4 +18,16 @@ async function updateName(req, res) {
         res.status(500).json({ error: 'Failed to update name' });
     }
 }
-export default updateName
+
+export const  getAllUsers =  async (req, res)=>  {
+    try {
+        const users = await OTP.find()
+            res.send(users).res.json({ message: "data found" });
+    }
+    catch (err) {
+        console.log(err)
+    }
+    // console.log(users)
+
+    
+}

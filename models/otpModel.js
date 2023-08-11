@@ -5,6 +5,9 @@ const otpSchema = new mongoose.Schema({
   otp: { type: String, required: true },
   fname: { type: String, },
   lname: { type: String, },
+  username: {
+    type: String
+  },
   createdAt: { type: Date, default: Date.now }
 });
 

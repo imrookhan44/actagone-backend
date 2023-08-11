@@ -5,7 +5,8 @@ import upload from '../helpers/UserProfile.js';
 import { addCard, deleteCard, getCard } from '../controller/AddCard.js';
 import { getConversation, postConversation } from '../controller/chat.conversation.js';
 import { getMessages, postMessage } from '../controller/chat.message.js';
-import updateName from '../controller/signup.js';
+import {updateName, getAllUsers} from '../controller/signup.js';
+
 
 const router = express.Router()
 router.post('/register', controller);
@@ -28,6 +29,7 @@ router.route('/message/:conversationId').get(getMessages);
 router.route('/users/:userId').get(getUsers);
 //update user profile
 router.route('/updateProfile').put(updateProfile);
+router.get('/getallusers', getAllUsers)
 
 export default router;
 
