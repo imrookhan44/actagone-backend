@@ -5,8 +5,11 @@ const otpSchema = new mongoose.Schema({
   otp: { type: String, required: true },
   firstName: { type: String, },
   lastName: { type: String, },
+  userName: {
+    type: String
+  },
   image: {
-    type: String,
+    type: String
   },
   createdAt: { type: Date, default: Date.now }
 });
