@@ -12,14 +12,21 @@ export const postFriends = async (req, res) => {
         if (firstName && lastName
             && userName) {
         
-    const user=await OTP.find({firstName, lastName, userName})
-    console.log("user:",user)
-    return
+    // const user=await OTP.find({firstName, lastName, userName})
+    // console.log("user:",user)
+    // return
             const newFriend = new AddFriends({ firstName, lastName, userName });
             await newFriend.save();
             res.json(newFriend);
             res.status(201);
             console.log(newFriend);
+        }
+        else if (!firstName && !lastName && !userName) {
+            const friendsdata = new AddFriends({ firstName, lastName, userName });
+            const result = await friendsdata.save();
+            res.json({ message: 'Friends Added Successfully' });
+            res.status(201);
+            console.log(result);
         }
         else {
             res.status(400).json({ message: "Please fill in all fields" });
@@ -46,4 +53,32 @@ export const deleteFriend = async (req, res) => {
     catch (err) {
         res.status(500).json(err);
     }
- }
+}
+ 
+export const searchFriends = async (req, res) => {
+   
+    try {
+        const friends = await AddFriends.find({
+            "$or": [
+                {
+                    "firstName": { $regex:req.params.key  },
+                },
+
+                {
+                    "lastName": { $regex:req.params.key },
+                },
+                {
+                    "userName": { $regex: req.params.key },
+                }
+                ]
+        })
+        res.send({friends}).res.status(302)
+
+        
+        console.log("friends", friends)
+    }
+    catch (err) {
+        res.status(500).json(err);
+    }
+    
+}
