@@ -5,13 +5,9 @@ import upload from '../helpers/UserProfile.js';
 import { addCard, deleteCard, getCard } from '../controller/AddCard.js';
 import { getConversation, postConversation } from '../controller/chat.conversation.js';
 import { getMessages, postMessage } from '../controller/chat.message.js';
-<<<<<<< HEAD
-import updateName from '../controller/signup.js';
-import updateNameAndImage from '../controller/signup.js';
-=======
 import {updateName, getAllUsers} from '../controller/signup.js';
+import { handlePayment } from '../controller/stripController.js';
 
->>>>>>> c2a8f455ce2a61a5fdeb6a96742118a6b844c01d
 
 const router = express.Router()
 router.post('/register', controller);
@@ -20,8 +16,8 @@ router.post('/addCard', addCard)
 router.get('/getCards', getCard)
 router.delete('/deleteCard', deleteCard)
 router.post('/smsMarketing', postSmsMarketing)
-router.put('/signup', updateNameAndImage)
-
+router.put('/signup', updateName)
+router.post('/payment', handlePayment);
 
 //conversation routes
 router.route('/conversation').post(postConversation)

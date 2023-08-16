@@ -1,5 +1,5 @@
-import AddFriends from "../models/AddFriends";
-
+import AddFriends from "../models/AddFriends.js";
+import OTP from '../models/otpModel.js'
 export const getFriends = async (req, res) => {
     const friends = await AddFriends.find();
     res.json(friends);
@@ -9,10 +9,12 @@ export const postFriends = async (req, res) => {
     const { firstName, lastName, userName } = req.body;
     try {
 
-        if (firstName || lastName
-            || userName) {
+        if (firstName && lastName
+            && userName) {
         
-    
+    const user=await OTP.find({firstName, lastName, userName})
+    console.log("user:",user)
+    return
             const newFriend = new AddFriends({ firstName, lastName, userName });
             await newFriend.save();
             res.json(newFriend);
