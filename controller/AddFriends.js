@@ -1,84 +1,63 @@
 import AddFriends from "../models/AddFriends.js";
-import OTP from '../models/otpModel.js'
+import OTP from "../models/otpModel.js";
+
 export const getFriends = async (req, res) => {
-    const friends = await AddFriends.find();
-    res.json(friends);
-}
-
-export const postFriends = async (req, res) => {
-    const { firstName, lastName, userName } = req.body;
     try {
-
-        if (firstName && lastName
-            && userName) {
-        
-    // const user=await OTP.find({firstName, lastName, userName})
-    // console.log("user:",user)
-    // return
-            const newFriend = new AddFriends({ firstName, lastName, userName });
-            await newFriend.save();
-            res.json(newFriend);
-            res.status(201);
-            console.log(newFriend);
-        }
-        else if (!firstName && !lastName && !userName) {
-            const friendsdata = new AddFriends({ firstName, lastName, userName });
-            const result = await friendsdata.save();
-            res.json({ message: 'Friends Added Successfully' });
-            res.status(201);
-            console.log(result);
-        }
-        else {
-            res.status(400).json({ message: "Please fill in all fields" });
-        }
-    }
-    catch (err) {
+        const friends = await AddFriends.find();
+        res.json(friends);
+    } catch (err) {
         res.status(500).json(err);
     }
-}
+};
+
+export const postFriends = async (req, res) => {
+    const { firstName, lastName, userName, userId } = req.body; // Add otpCode to the destructuring
+
+    try {
+        if (firstName && lastName && userName) {
+            const otp = await OTP.findOne({ firstName, lastName, userName });
+            if (otp) {
+                const newFriend = new AddFriends({ firstName, lastName, userName, userId });
+                await newFriend.save();
+                res.status(201).json(newFriend); 
+                console.log(newFriend);
+    
+            } else {
+                res.status(401).json({ message: "Invalid OTP" });
+            }
+        } else {
+            res.status(400).json({ message: "Please fill in all fields including OTP" });
+        }
+    } catch (err) {
+        res.status(500).json(err);
+    }
+};
 
 export const deleteFriend = async (req, res) => {
-    
     try {
         const friend = await AddFriends.findByIdAndDelete(req.params.id);
         if (friend) {
-            res.json({ message: `${friend} Deleted Successfully ` });
-            res.status(200);
-        }
-        else {
+            res.status(200).json({ message: `${friend} Deleted Successfully ` }); // Sending JSON response before setting status
+        } else {
             res.status(404).json({ message: "Friend not found" });
         }
-
-    }
-    catch (err) {
+    } catch (err) {
         res.status(500).json(err);
     }
-}
- 
+};
+
 export const searchFriends = async (req, res) => {
-   
     try {
         const friends = await AddFriends.find({
-            "$or": [
-                {
-                    "firstName": { $regex:req.params.key  },
-                },
-
-                {
-                    "lastName": { $regex:req.params.key },
-                },
-                {
-                    "userName": { $regex: req.params.key },
-                }
-                ]
-        })
-        res.send({friends}).res.status(302)
-
-        
-        console.log("friends", friends)
-    }
-    catch (err) {
+            $or: [
+                { firstName: { $regex: req.params.key } },
+                { lastName: { $regex: req.params.key } },
+                { userName: { $regex: req.params.key } }
+            ]
+        });
+        res.status(200).json({ friends }); // Sending JSON response before setting status
+        console.log("friends", friends);
+    } catch (err) {
         res.status(500).json(err);
     }
-    
-}
+};

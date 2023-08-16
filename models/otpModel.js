@@ -11,9 +11,10 @@ const otpSchema = new mongoose.Schema({
   image: {
     type: String
   },
+ 
   createdAt: { type: Date, default: Date.now }
 });
 
-const OTP = mongoose.model('OTP', otpSchema);
+const OTP = mongoose.model('otp', otpSchema);
 
 export default OTP

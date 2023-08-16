@@ -20,6 +20,11 @@ const AddFirendsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    userId: {
+        type:mongoose.Schema.Types.ObjectId,
+        required:true,
+        rep:'otps'
+      },
     createdDate: {
         type: Date,
         default: timeStamp
