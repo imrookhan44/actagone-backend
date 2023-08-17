@@ -61,6 +61,9 @@ export const sendOTPnode = async(req, res)=> {
 export const loginOtpSend = async (req, res) => {
   
   const { email } = req.body;
+  if (!email) {
+    return res.status(400).json({ error: 'please enter the email' })
+  }
   try {
     let emailFound = await OTP.findOne({ email });
     if (!emailFound) {
@@ -68,18 +71,18 @@ export const loginOtpSend = async (req, res) => {
     }
     const newOTP = new OTP({ email, otp });
     // let data = await newOTP.save();
-
+     await OTP.findOneAndUpdate({ email }, { otp });
     const info = await transporter.sendMail({
       from: process.env.AUTH_EMAIL, // Update with your email address
       to: email,
       subject: 'OTP for Login', // Replace with your email's subject
       text: `Your OTP is: ${otp}`, // Email body with the OTP
     });
-    console.log('OTP saved to the database');
-    let dataEmail = data.email
-    let _id = data._id
+    console.log('OTP send');
+    // let dataEmail = data.email
+    // let _id = data._id
     // Respond to the client
-    res.status(200).json({ message: 'OTP sent successfully', data: { email: dataEmail, _id } });
+    res.status(200).json({ message: 'OTP sent successfully' });
   }catch (error) {
     console.error('Error sending OTP:', error);
 
@@ -92,21 +95,28 @@ export const loginOtpSend = async (req, res) => {
 export const  loginOtpVerify = async (req, res) => {
   const oneDay = 24 * 60 * 60 * 1000;
   const { email, otp } = req.body;
+  if (!email || !otp) { 
+    return res.status(400).json({ error: 'please fill the fields' })
+  }
+ 
   try {
 
     const savedOtp = await OTP.findOne({ email, otp });
+
+   
     if (!savedOtp) {
       return res.status(400).json({ message: "Invalid OTP" })
     }
+    await OTP.findOneAndUpdate({ email }, {otp:null})
     // Generate a JWT token
      // Replace with your actual secret key
     const jwtPayload = {
-      email: savedOtp.email,
+      email
       // Add any additional data you want to include in the token payload
     };
-    const token = jwt.sign(jwtPayload, secretKey, { expiresIn : oneDay} ); // You can adjust the expiration time
-
-    return res.status(200).json({ message: "OTP verified", token: token });
+    // const token = jwt.sign(jwtPayload, secretKey, { expiresIn : oneDay} ); // You can adjust the expiration time
+    // console.log("token :",token)
+    return res.status(200).json({ message: "successfull login", token: "23428934028" });
     
   } catch (error) {
     console.error('Error sending OTP:', error);

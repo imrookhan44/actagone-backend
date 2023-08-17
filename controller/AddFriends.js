@@ -23,7 +23,7 @@ export const postFriends = async (req, res) => {
                 console.log(newFriend);
     
             } else {
-                res.status(401).json({ message: "Invalid OTP" });
+                res.status(404).json({ message: "data not found" });
             }
         } else {
             res.status(400).json({ message: "Please fill in all fields including OTP" });
