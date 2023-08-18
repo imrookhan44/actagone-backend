@@ -107,7 +107,7 @@ export const  loginOtpVerify = async (req, res) => {
     if (!savedOtp) {
       return res.status(400).json({ message: "Invalid OTP" })
     }
-    await OTP.findOneAndUpdate({ email }, {otp:null})
+   const data =  await OTP.findOneAndUpdate({ email }, {otp:null})
     // Generate a JWT token
      // Replace with your actual secret key
     const jwtPayload = {
@@ -116,13 +116,36 @@ export const  loginOtpVerify = async (req, res) => {
     };
     // const token = jwt.sign(jwtPayload, secretKey, { expiresIn : oneDay} ); // You can adjust the expiration time
     // console.log("token :",token)
-    return res.status(200).json({ message: "successfull login", token: "23428934028" });
+    return res.status(200).json({ message: "successfull login", token: "23428934028", data : data });
     
   } catch (error) {
     console.error('Error sending OTP:', error);
     res.status(500).json({ error: 'Failed to send OTP' })
   
   }
+}
+
+
+export const getUser = async (req, res) => {
+  try {
+    const user = await OTP.find();
+    res.json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+export const getUserById = async (req, res) => {
+  
+  try {
+    const user = await OTP.findById();
+    res.json(user);
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err)
+    
+  }
+  
 }
 
 

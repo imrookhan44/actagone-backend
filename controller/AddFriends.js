@@ -10,19 +10,43 @@ export const getFriends = async (req, res) => {
     }
 };
 
+export const getFriendsByUserId = async (req, res) => {
+    const userId = req.params.userId;
+
+    try {
+        const friends = await AddFriends.findOne({ userId });
+
+        if (friends) {
+            res.status(200).json(friends);
+        } else {
+            res.status(404).json({ message: "User not found" });
+        }
+    } catch (err) {
+        res.status(500).json(err);
+    }
+};
+
+
+
 export const postFriends = async (req, res) => {
     const { firstName, lastName, userName, userId } = req.body; // Add otpCode to the destructuring
 
     try {
         if (firstName && lastName && userName) {
             const otp = await OTP.findOne({ firstName, lastName, userName });
-            if (otp) {
+          const friends =  await AddFriends.findOne({firstName, lastName, userName})
+         if (friends) {
+              res.status(302).json({message: "user already added"})
+              return 
+          }
+            if (otp && !friends) {
                 const newFriend = new AddFriends({ firstName, lastName, userName, userId });
                 await newFriend.save();
                 res.status(201).json(newFriend); 
                 console.log(newFriend);
     
-            } else {
+            }
+            else {
                 res.status(404).json({ message: "data not found" });
             }
         } else {
