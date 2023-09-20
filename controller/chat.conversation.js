@@ -1,5 +1,5 @@
 import Conversation from '../models/chat.conversation.js'
-import User from '../models/userSchema.js'
+import User from '../models/Register.js '
 export const postConversation = async (req, res) => {
   try {
     const { senderId, receiverId } = req.body;
@@ -19,8 +19,8 @@ export const getConversation = async (req, res) => {
       const user = await User.findById(receiverId);
       return {
         user: {
-          receiverId: user._id, email: user.email, fullName: user.
-            firstName
+          receiverId: user._id, email: user.email, fullName: user.firstName,
+          profile_img: user.profile_img
         }, conversationId: conversation._id
       }
     }))
