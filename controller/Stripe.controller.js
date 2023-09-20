@@ -1,6 +1,7 @@
 import stripePackage from "stripe";
-
-const stripe = stripePackage(process.env.SECRET_KEY ? process.env.SECRET_KEY : "sk_test_51LkMoWArkpbHU2Aqf0lef7mHc9Kx1HefsHSRKnMrrLRM619SJvCHpYiXgO2x28fgUiOcZw9JDZJEhnkMygtzvyzu00fg73o1rT");
+import dotenv from "dotenv";
+dotenv.config()
+const stripe = stripePackage(process.env.SECRET_KEY);
 export const handlePayment = async (req, res) => {
   let status, error;
   const { amount, currency, email } = req.body;
@@ -21,7 +22,7 @@ export const handlePayment = async (req, res) => {
         },
       ],
       mode: 'payment',
-      success_url: 'http://localhost:3000/',
+      success_url: 'http://localhost:3000/amountToPay',
       cancel_url: 'https://yourwebsite.com/cancel',
       customer_email: email,
     });

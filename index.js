@@ -15,6 +15,7 @@ const io = new Server(8080, {
         origin: "http://localhost:3000",
     },
 });
+console.log("process.env.DATABASE_URL", process.env.DATABASE_URL)
 
 const app = express();
 app.use(bodyParser.json({ limit: "30mb", extended: true }));

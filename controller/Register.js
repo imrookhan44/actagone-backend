@@ -6,11 +6,12 @@ import nodemailer from "nodemailer";
 import randomstring from "randomstring";
 import cloudinary from "./../helpers/UploadImage.js  ";
 import Conversation from "../models/chat.conversation.js";
-
-const accountSid = process.env.TWILIO_ACCOUNT_SID ? process.env.TWILIO_ACCOUNT_SID : "ACa84ce0251837abd9a9a0c43264664c5f";
-const authToken = process.env.TWILIO_AUTH_TOKEN ? process.env.TWILIO_AUTH_TOKEN : "ecc5d322fd4cf85115ecf2a173ea2adb";
-const twilioPhoneNumber = process.env.TWILIO_FROM_NUMBER ? process.env.TWILIO_FROM_NUMBER : "+18668606197";
-const secretKey = process.env.JWT_SECRET_KEY ? process.env.JWT_SECRET_KEY : "secretKey";
+import dotenv from "dotenv";
+dotenv.config();
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const twilioPhoneNumber = process.env.TWILIO_FROM_NUMBER;
+const secretKey = process.env.JWT_SECRET_KEY;
 
 console.log(accountSid, authToken, twilioPhoneNumber, secretKey);
 const client = twilio(accountSid, authToken);
