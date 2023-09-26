@@ -1,5 +1,7 @@
 import Messages from '../models/chat.messages.js';
 import User from '../models/Register.js';
+import dotenv from "dotenv";
+dotenv.config()
 import Conversations from '../models/chat.conversation.js'
 export const postMessage = async (req, res) => {
   try {
@@ -25,10 +27,8 @@ export const postMessage = async (req, res) => {
 export const getMessages = async (req, res) => {
   try {
     const checkMessages = async (conversationId) => {
-      console.log(conversationId, 'conversationId')
       const messages = await Messages.find({ conversationId });
       const messageUserData = Promise.all(messages.map(async (message) => {
-        console.log(message, 'message')
         const user = await User.findById(message.senderId);
         return { user: { id: user?._id, email: user?.email, firstName: user?.firstName }, message: message.message }
       }));

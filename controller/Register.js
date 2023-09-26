@@ -12,10 +12,7 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const twilioPhoneNumber = process.env.TWILIO_FROM_NUMBER;
 const secretKey = process.env.JWT_SECRET_KEY;
-
-console.log(accountSid, authToken, twilioPhoneNumber, secretKey);
 const client = twilio(accountSid, authToken);
-
 function generateOTP() {
   return Math.floor(100000 + Math.random() * 900000);
 }
@@ -38,7 +35,6 @@ function generateEmailOtp() {
 
 export const phoneAuth = async (req, res) => {
   const { phone } = req.body;
-  console.log(phone, "phone");
   try {
     const existingUser = await User.findOne({ phone });
     if (existingUser) {
@@ -161,7 +157,6 @@ export const emailAuth = async (req, res) => {
         return res.status(404).send("User not found");
       } else {
         const sendOtp = await sendOtpByEmail(email, generatedOTP);
-        console.log(sendOtp, "sendOtp");
         if (!sendOtp) {
           return res.status(404).send("User not found");
         } else {

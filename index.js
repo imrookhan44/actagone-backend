@@ -9,14 +9,12 @@ import { Server } from "socket.io";
 import User from "./models/Register.js";
 import chatRoutes from "./routers/ChatRoutes.js";
 import stripeRoutes from './routers/StripeRoutes.js'
-
+import ScheduleRoute from './routers/ScheduleRoute.js'
 const io = new Server(8080, {
     cors: {
         origin: "http://localhost:3000",
     },
 });
-console.log("process.env.DATABASE_URL", process.env.DATABASE_URL)
-
 const app = express();
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
@@ -33,6 +31,10 @@ db.once("open", function () {
 app.use("/api/v1", RegisterRoute);
 app.use("/api/v1", chatRoutes);
 app.use("/api/v1", stripeRoutes);
+app.use("/api/v1", ScheduleRoute);
+app.get("*", (req, res) => {
+    res.send("Not Found")
+})
 let users = [];
 io.on("connection", (socket) => {
     console.log("User connected", socket.id);

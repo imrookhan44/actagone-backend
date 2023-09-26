@@ -1,5 +1,7 @@
 import Conversation from '../models/chat.conversation.js'
 import User from '../models/Register.js '
+import dotenv from "dotenv";
+dotenv.config()
 export const postConversation = async (req, res) => {
   try {
     const { senderId, receiverId } = req.body;
