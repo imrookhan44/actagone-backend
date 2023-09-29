@@ -10,6 +10,7 @@ import User from "./models/Register.js";
 import chatRoutes from "./routers/ChatRoutes.js";
 import stripeRoutes from './routers/StripeRoutes.js'
 import ScheduleRoute from './routers/ScheduleRoute.js'
+import savedRoute from './routers/Saved.js'
 const io = new Server(8080, {
     cors: {
         origin: "http://localhost:3000",
@@ -32,6 +33,7 @@ app.use("/api/v1", RegisterRoute);
 app.use("/api/v1", chatRoutes);
 app.use("/api/v1", stripeRoutes);
 app.use("/api/v1", ScheduleRoute);
+app.use("/api/v1", savedRoute);
 app.get("*", (req, res) => {
     res.send("Not Found")
 })
