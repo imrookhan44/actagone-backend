@@ -1,5 +1,4 @@
 import User from "../models/Register.js";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import twilio from "twilio";
 import nodemailer from "nodemailer";
@@ -16,6 +15,8 @@ const client = twilio(accountSid, authToken);
 function generateOTP() {
   return Math.floor(100000 + Math.random() * 900000);
 }
+
+console.log("test:", accountSid, authToken, twilioPhoneNumber)
 
 const emailConfig = {
   service: "Gmail",
@@ -59,6 +60,7 @@ export const phoneAuth = async (req, res) => {
           res.status(200).json({ message: "OTP sent successfully" });
         })
         .catch((error) => {
+          console.log(error)
           res
             .status(500)
             .json({ msg: "Failed to send OTP", error: error.message });
